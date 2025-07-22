@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brewery Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            text-align: center;
+            padding: 40px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        li {
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍻 Brewery Finder</h1>
+
+    <form method="post">
+        <input type="text" name="city" placeholder="e.g. Austin" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if city %}
+        <h2>Results for "{{ city.title() }}":</h2>
+        {% if breweries %}
+            <ul>
+                {% for brewery in breweries %}
+                    <li>
+                        <strong>{{ brewery.name }}</strong> - {{ brewery.brewery_type }}<br>
+                        {{ brewery.city }}, {{ brewery.state }}<br>
+                        {% if brewery.website_url %}
+                            <a href="{{ brewery.website_url }}" target="_blank">Visit Website</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No breweries found for this city.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
